@@ -1,11 +1,13 @@
 import { defineStore } from "pinia";
 import {ref, computed, onMounted} from 'vue';
+import { useRouter } from "vue-router";
 
 import { useFirebaseAuth } from 'vuefire'
 import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 
 export const useAuthStore = defineStore('auth', () => {
     const auth = useFirebaseAuth();
+    const router = useRouter();
 
     const errores = {
         'auth/user-not-found' : 'Usuario no encontrado',
@@ -27,6 +29,7 @@ export const useAuthStore = defineStore('auth', () => {
         .then((userCredential) => {
           usuario.value = userCredential.user;
           errorActual.value = '';
+          router.push({name: 'admin-propiedades'})
         })
         .catch(error => {
             errorActual.value = errores[error.code];
@@ -37,6 +40,7 @@ export const useAuthStore = defineStore('auth', () => {
         signOut(auth).then(() => {
             // Sign-out successful.
             usuario.value = null;
+            router.push({name: 'login'})
         }).catch((error) => {
             // An error happened.
             console.log(error);
