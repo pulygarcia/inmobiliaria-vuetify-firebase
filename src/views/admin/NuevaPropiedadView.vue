@@ -8,7 +8,7 @@
       Nueva propiedad
     </v-card-title>
 
-    <v-card-subtitle class="text-h5 font-weight-bold text-center py-3 truncate">
+    <v-card-subtitle class="text-h5 font-weight-bold text-center py-3 text-wrap">
       Crea una nueva propiedad llenando el formulario
     </v-card-subtitle>
 

@@ -14,7 +14,7 @@ const authStore = useAuthStore();
     <v-layout>
       <v-app-bar
         color="red-lighten-1"
-        scroll-behavior="collapse"
+        scroll-behavior="hide"
       >
         <template v-slot:prepend>
           <v-btn :to="{name: 'inicio'}">
