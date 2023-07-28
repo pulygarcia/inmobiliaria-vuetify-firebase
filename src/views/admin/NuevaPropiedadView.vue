@@ -6,12 +6,17 @@
   import { collection, addDoc } from "firebase/firestore"; 
 
   import useImage from '@/composables/useImage'
+  import useMapa from '@/composables/useMapa';
+
+  import "leaflet/dist/leaflet.css";
+  import { LMap, LTileLayer, LMarker } from "@vue-leaflet/vue-leaflet";
 
   import { useRouter } from 'vue-router';
 
   const router = useRouter();
 
   const { uploadImage, image, url } = useImage();
+  const {zoom, center, pin} = useMapa();
  
   const cantidad = [1, 2, 3, 4, 5]; //options para los select
 
@@ -42,7 +47,8 @@
 
     const docRef = await addDoc(collection(db, "propiedades"), {
       ...propiedad,
-      imagen: url.value
+      imagen: url.value,
+      ubicacion: center.value
     });
     
     //Si se agrego correctamente... redireccionar al admin panel
@@ -131,6 +137,29 @@
           <v-textarea class="mb-5" label="Descripción de la propiedad" v-model="descripcion.value.value" :error-messages="descripcion.errorMessage.value"></v-textarea>
 
           <v-checkbox label="Piscina" v-model="piscina.value.value"/>
+
+          <h2 class="font-weight-bold text-center">Ubicación</h2>
+
+          <div class="py-10">
+            <div style="height:600px;">
+                <l-map
+                  v-model:zoom="zoom"
+                  :center="center"
+                  :use-global-leaflet="false"
+                >
+                  <LMarker 
+                    :lat-lng="center"
+                    draggable
+                    @moveend="pin"
+                  />
+
+                  <l-tile-layer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  ></l-tile-layer>
+                </l-map>
+            </div>
+          </div>
+
 
           <v-btn type="submit" @click="submit" block class="my-2" color="indigo-darken-1">Crear propiedad</v-btn>
       </v-form>
