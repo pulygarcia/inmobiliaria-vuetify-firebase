@@ -5,7 +5,7 @@
 </script>
 
 <template>
-  <h2 class="text-center text-h3 font-weight-bold my-5">Administración</h2>
+  <h2 class="text-center text-h3 font-weight-bold my-5">Panel de Control</h2>
 
   <v-container>
     <v-btn
@@ -32,10 +32,13 @@
 
         <v-list-item-title class="text-h6">{{ propiedad.titulo }}</v-list-item-title>
 
-        <v-list-item-subtitle class="text-subtitle-1 font-weight-bold mt-1 text-red">{{ conversorPrecio(propiedad.precio) }}</v-list-item-subtitle>
+        <v-list-item-subtitle class="text-subtitle-1 font-weight-bold mt-1 text-green-darken-1">{{ conversorPrecio(propiedad.precio) }}</v-list-item-subtitle>
 
         <template v-slot:append>
-          <v-btn color="info mr-2">
+          <v-btn 
+            color="info mr-2"
+            :to="{name: 'editar-propiedad', params: {id: propiedad.id}}"
+          >
             Editar
           </v-btn>
           <v-btn color="red-darken-3">
