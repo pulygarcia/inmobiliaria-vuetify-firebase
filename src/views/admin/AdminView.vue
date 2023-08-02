@@ -1,7 +1,9 @@
 <script setup>
   import usePropiedades from '@/composables/usePropiedades';
 
-  const {propiedades, conversorPrecio} = usePropiedades();
+  import { conversorPrecio } from '../../helpers';
+
+  const {propiedades} = usePropiedades();
 </script>
 
 <template>
@@ -22,7 +24,7 @@
       <v-list-item
         v-for="propiedad in propiedades"
         :key="propiedad.id"
-        class="border mb-5 py-4"
+        class="border mb-5 py-4 d-flex flex-column flex-md-row justify-space-between"
       >
         <template v-slot:prepend>
           <v-list-item-media :start="true">
@@ -32,7 +34,7 @@
 
         <v-list-item-title class="text-h6">{{ propiedad.titulo }}</v-list-item-title>
 
-        <v-list-item-subtitle class="text-subtitle-1 font-weight-bold mt-1 text-green-darken-1">{{ conversorPrecio(propiedad.precio) }}</v-list-item-subtitle>
+        <v-list-item-subtitle class="text-subtitle-1 font-weight-bold text-green-darken-1 my-5">{{ conversorPrecio(propiedad.precio) }}</v-list-item-subtitle>
 
         <template v-slot:append>
           <v-btn 

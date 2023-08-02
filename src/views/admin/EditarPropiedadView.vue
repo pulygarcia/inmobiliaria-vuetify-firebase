@@ -66,9 +66,7 @@
       }
 
       //actualizar en firebase
-      await updateDoc(docRef, {
-        data
-      });
+      await updateDoc(docRef, data);
     }else{
       //unir en un solo objeto la propiedad y la ubicacion del mapa (ya que está en composable aparte)
       const data = {
@@ -77,9 +75,7 @@
       }
 
       //actualizar en firebase
-      await updateDoc(docRef, {
-        data
-      });
+      await updateDoc(docRef, data);
     }
 
     router.push({name: 'admin-propiedades'})

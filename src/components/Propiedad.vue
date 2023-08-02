@@ -1,7 +1,5 @@
 <script setup>
-    import usePropiedades from '../composables/usePropiedades';
-
-    const {conversorPrecio} = usePropiedades()
+    import { conversorPrecio } from '../helpers';
 
     defineProps({
         propiedad:{
