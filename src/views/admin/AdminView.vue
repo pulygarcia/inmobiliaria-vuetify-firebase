@@ -3,7 +3,8 @@
 
   import { conversorPrecio } from '../../helpers';
 
-  const {propiedades} = usePropiedades();
+  const {propiedades, eliminarPropiedad} = usePropiedades();
+
 </script>
 
 <template>
@@ -43,7 +44,7 @@
           >
             Editar
           </v-btn>
-          <v-btn color="red-darken-3">
+          <v-btn color="red-darken-3" @click="eliminarPropiedad(propiedad.id, propiedad.imagen)">
             Eliminar
           </v-btn>
         </template>
