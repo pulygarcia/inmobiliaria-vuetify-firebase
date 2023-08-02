@@ -1,15 +1,27 @@
 <script setup>
+    import {watch} from 'vue';
+
     import {useFirestore, useDocument} from 'vuefire';
     import { doc } from "firebase/firestore";
     import { useRoute } from 'vue-router';
 
     import { conversorPrecio } from '../helpers';
 
+    import "leaflet/dist/leaflet.css";
+    import { LMap, LTileLayer, LMarker } from "@vue-leaflet/vue-leaflet";
+    import useMapa from '../composables/useMapa'
+
     const route = useRoute();
 
     const db = useFirestore();
     const docRef = doc(db, "propiedades", route.params.id);
     const propiedadSeleccionada = useDocument(docRef);
+
+    const {zoom, center} = useMapa();
+
+    watch(propiedadSeleccionada, (propiedadSeleccionada) => {
+        center.value = propiedadSeleccionada.ubicacion;
+    })
     
 </script>
 
@@ -29,6 +41,31 @@
             <v-card-text class="font-weight-medium">Estacionamientos: <span class="font-weight-bold">{{ propiedadSeleccionada?.estacionamiento }}</span></v-card-text>
         </div>
 
-        <v-card-text class="text-center text-grey-darken-1">{{ propiedadSeleccionada?.descripcion }}</v-card-text>
+        
+        <div class="py-10">
+            <v-row>
+                <v-col cols="12" md="7">
+                    <v-card-text class="text-grey-darken-1">{{ propiedadSeleccionada?.descripcion }}</v-card-text>
+                </v-col>
+
+                <v-col cols="12" md="5">
+                    <div style="height:400px;">
+                        <l-map
+                        v-model:zoom="zoom"
+                        :center="center"
+                        :use-global-leaflet="false"
+                        >
+                            <LMarker 
+                                :lat-lng="center"
+                            />
+
+                            <l-tile-layer
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            ></l-tile-layer>
+                        </l-map>
+                    </div>
+                </v-col>
+            </v-row>    
+        </div>
     </v-card>
 </template>

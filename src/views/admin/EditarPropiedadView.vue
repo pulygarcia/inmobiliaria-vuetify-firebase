@@ -186,7 +186,7 @@
 
             <v-checkbox 
                 v-model="piscina.value.value"
-                label="Alberca"
+                label="Piscina"
             ></v-checkbox>
 
 
